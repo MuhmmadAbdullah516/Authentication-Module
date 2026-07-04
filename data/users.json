@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "name": "Demo User",
+    "email": "demo@gmail.com",
+    "password": "password123"
+  },
+  {
+    "id": "2",
+    "name": "User abdullahsargana516",
+    "email": "abdullahsargana516@gmail.com",
+    "password": "12345678"
+  },
+  {
+    "id": "3",
+    "name": "User muhammadabdullah98752",
+    "email": "muhammadabdullah98752@gmail.com",
+    "password": "Abdullah2123"
+  },
+  {
+    "id": "4",
+    "name": "User abdullahsargana516+1",
+    "email": "abdullahsargana516+1@gmail.com",
+    "password": "Abdullah123"
+  },
+  {
+    "id": "5",
+    "name": "User user",
+    "email": "user@nextmail.com",
+    "password": "123456"
+  },
+  {
+    "id": "6",
+    "name": "User abdullah",
+    "email": "abdullah@gmail.com",
+    "password": "123456"
+  }
+]

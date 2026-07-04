@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
+import { logoutAction } from "@/app/actions/auth";
 import MobileMenu from "@/components/layout/MobileMenu";
 import Button from "@/components/ui/Button";
 
@@ -54,11 +55,8 @@ export default async function Header() {
                   <span className="text-sm font-semibold text-[#1e2550] hidden lg:block">
                     Hi, {session.user?.name}
                   </span>
-                  <form action={async () => {
-                    "use server";
-                    await signOut();
-                  }}>
-                    <Button variant="secondary" fullWidth={false} className="px-4">
+                  <form action={logoutAction}>
+                    <Button type="submit" variant="secondary" fullWidth={false} className="px-4">
                       Sign Out
                     </Button>
                   </form>

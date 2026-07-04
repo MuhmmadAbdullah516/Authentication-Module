@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
+import { logoutAction } from "@/app/actions/auth";
 
 interface MobileMenuProps {
   isLoggedIn: boolean;
@@ -51,8 +52,8 @@ export default function MobileMenu({ isLoggedIn, userName }: MobileMenuProps) {
             {isLoggedIn ? (
               <div className="flex flex-col gap-2">
                 <span className="text-xs text-gray-400 px-3">Hi, {userName}</span>
-                <form action="/api/auth/signout" method="POST">
-                  <Button variant="secondary">
+                <form action={logoutAction}>
+                  <Button type="submit" variant="secondary">
                     Sign Out
                   </Button>
                 </form>

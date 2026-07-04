@@ -114,7 +114,7 @@ export default function LoginForm() {
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-500">
-          Don't have an Account?{" "}
+          Don&apos;t have an Account?{" "}
           <Link href={ROUTES.SIGNUP} className="font-semibold text-[#1e2550] hover:underline">
             Sign Up
           </Link>

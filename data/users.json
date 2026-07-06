@@ -3,13 +3,13 @@
     "id": "1",
     "name": "Demo User",
     "email": "demo@gmail.com",
-    "password": "password123"
+    "password": "12345678999"
   },
   {
     "id": "2",
     "name": "User abdullahsargana516",
     "email": "abdullahsargana516@gmail.com",
-    "password": "12345678"
+    "password": "123456789"
   },
   {
     "id": "3",
@@ -33,6 +33,12 @@
     "id": "6",
     "name": "User abdullah",
     "email": "abdullah@gmail.com",
+    "password": "123456"
+  },
+  {
+    "id": "7",
+    "name": "User abdulla1234",
+    "email": "abdulla1234@gmail.com",
     "password": "123456"
   }
 ]

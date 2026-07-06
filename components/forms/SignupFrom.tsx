@@ -2,19 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, Lock, Eye, EyeOff, Phone, ArrowLeft, ChevronDown } from "lucide-react";
+import { Phone, ArrowLeft, ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
-import Label from "@/components/ui/Label";
 import Card from "@/components/ui/Card";
+import EmailField from "@/components/ui/emailfield";
+import Label from "@/components/ui/Label";
+import PasswordField from "@/components/ui/passwordfield";
 
 // Import centralized Zod schema
-import { signupSchema, type SignupFormData } from "@/lib/validation";
+import { signupSchema } from "@/lib/validation";
 import { toast } from "react-toastify";
 import { ROUTES, MESSAGES } from "@/lib/constants";
 import { signupAction } from "@/app/actions/auth";
-import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const [email, setEmail] = useState("");
@@ -22,12 +23,11 @@ export default function SignupForm() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Step 1: Validate with Zod
     const validation = signupSchema.safeParse({ email, phone, password });
     if (!validation.success) {
@@ -69,21 +69,14 @@ export default function SignupForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <Label>Email Address</Label>
-            <Input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="demo@gmail.com"
-              icon={<Mail className="h-5 w-5 text-[#1e2550]" />}
-              error={errors.email}
-            />
-          </div>
+          <EmailField
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={errors.email}
+          />
 
           <div>
-            <Label>Phone</Label>
+            <Label htmlFor="phone">Phone</Label>
             <div>
               <div className={`flex border rounded-lg overflow-hidden focus-within:ring-1 focus-within:ring-[#1e2550] focus-within:border-[#1e2550] ${errors.phone ? "border-red-500" : "border-gray-300"}`}>
                 <div className="flex items-center px-3 bg-gray-50 border-r border-gray-300">
@@ -92,12 +85,16 @@ export default function SignupForm() {
                   <ChevronDown className="h-4 w-4 text-gray-400 ml-1" />
                 </div>
                 <input
+                  id="phone"
+                  name="phone"
                   type="tel"
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="block w-full py-2 px-3 focus:outline-none sm:text-sm text-gray-900 bg-white"
                   placeholder="1XXXXXXXXXX"
+                  autoComplete="tel"
+                  aria-invalid={Boolean(errors.phone)}
                 />
               </div>
               {errors.phone && (
@@ -106,27 +103,12 @@ export default function SignupForm() {
             </div>
           </div>
 
-          <div>
-            <Label>Password</Label>
-            <Input
-              type={showPassword ? "text" : "password"}
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              icon={<Lock className="h-5 w-5 text-[#1e2550]" />}
-              rightIcon={
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="cursor-pointer text-gray-400 hover:text-gray-600 focus:outline-none"
-                >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                </button>
-              }
-              error={errors.password}
-            />
-          </div>
+          <PasswordField
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={errors.password}
+            autoComplete="new-password"
+          />
 
           <div className="flex items-center">
             <input

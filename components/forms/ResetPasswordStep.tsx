@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Lock, Eye, KeyRound } from "lucide-react";
+import { KeyRound } from "lucide-react";
 
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Label from "@/components/ui/Label";
+import PasswordField from "@/components/ui/passwordfield";
 
 interface ResetPasswordStepProps {
   email: string;
@@ -18,7 +19,6 @@ export default function ResetPasswordStep({ email, isLoading, onSubmit, errors }
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,54 +27,46 @@ export default function ResetPasswordStep({ email, isLoading, onSubmit, errors }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
+      <input type="hidden" name="email" value={email} />
+
       <div>
-        <Label>OTP Code</Label>
+        <Label htmlFor="otp">OTP Code</Label>
         <Input
+          id="otp"
+          name="otp"
           type="text"
           required
           maxLength={6}
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
           placeholder="123456"
+          autoComplete="one-time-code"
+          inputMode="numeric"
           icon={<KeyRound className="h-5 w-5 text-[#1e2550]" />}
           error={errors.otp}
+          aria-invalid={Boolean(errors.otp)}
         />
       </div>
 
-      <div>
-        <Label>New Password</Label>
-        <Input
-          type={showPassword ? "text" : "password"}
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="••••••••"
-          icon={<Lock className="h-5 w-5 text-[#1e2550]" />}
-          rightIcon={
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="cursor-pointer text-gray-400 hover:text-gray-600 focus:outline-none"
-            >
-              <Eye className="h-5 w-5" />
-            </button>
-          }
-          error={errors.password}
-        />
-      </div>
+      <PasswordField
+        id="new-password"
+        name="newPassword"
+        label="New Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        error={errors.password}
+        autoComplete="new-password"
+      />
 
-      <div>
-        <Label>Confirm Password</Label>
-        <Input
-          type={showPassword ? "text" : "password"}
-          required
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="••••••••"
-          icon={<Lock className="h-5 w-5 text-[#1e2550]" />}
-          error={errors.confirmPassword}
-        />
-      </div>
+      <PasswordField
+        id="confirm-password"
+        name="confirmPassword"
+        label="Confirm Password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        error={errors.confirmPassword}
+        autoComplete="new-password"
+      />
 
       <Button type="submit" isLoading={isLoading}>
         Reset Password

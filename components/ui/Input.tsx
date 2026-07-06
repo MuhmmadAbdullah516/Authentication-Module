@@ -3,10 +3,13 @@ import { InputHTMLAttributes, ReactNode } from "react";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode;
   rightIcon?: ReactNode;
-  error?: string; // Zod validation error message
+  error?: string;
 }
 
 export default function Input({ icon, rightIcon, error, className = "", ...props }: InputProps) {
+  const describedBy = props["aria-describedby"];
+  const errorId = typeof describedBy === "string" ? describedBy : undefined;
+
   return (
     <div>
       <div className="relative">
@@ -30,7 +33,7 @@ export default function Input({ icon, rightIcon, error, className = "", ...props
         )}
       </div>
       {error && (
-        <p className="mt-1 text-xs text-red-500">{error}</p>
+        <p id={errorId} className="mt-1 text-xs text-red-500">{error}</p>
       )}
     </div>
   );

@@ -2,13 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
-import Label from "@/components/ui/Label";
 import Card from "@/components/ui/Card";
+import EmailField from "@/components/ui/emailfield";
 import ResetPasswordStep from "@/components/forms/ResetPasswordStep";
 
 import { checkEmailAction, resetPasswordAction } from "@/app/actions/auth";
@@ -48,7 +47,11 @@ export default function ForgetPasswordForm() {
   };
 
   // Handle step 2: Verify OTP & Reset Password
-  const handleResetPassword = async (otp: string, password: string, confirmPassword: string) => {
+  const handleResetPassword = async (
+    otp: string,
+    password: string,
+    confirmPassword: string,
+  ) => {
     const fieldErrors: Record<string, string> = {};
 
     if (otp !== "123456") {
@@ -115,18 +118,11 @@ export default function ForgetPasswordForm() {
         {step === 1 ? (
           /* STEP 1: REQUEST EMAIL FORM */
           <form onSubmit={handleRequestOtp} className="space-y-6">
-            <div>
-              <Label>Email Address</Label>
-              <Input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="demo@gmail.com"
-                icon={<Mail className="h-5 w-5 text-[#1e2550]" />}
-                error={errors.email}
-              />
-            </div>
+            <EmailField
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={errors.email}
+            />
 
             <Button type="submit" isLoading={isLoading}>
               Send OTP

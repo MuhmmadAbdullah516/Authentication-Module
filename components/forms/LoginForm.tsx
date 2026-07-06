@@ -4,12 +4,11 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
-import Label from "@/components/ui/Label";
 import Card from "@/components/ui/Card";
+import EmailField from "@/components/ui/emailfield";
+import PasswordField from "@/components/ui/passwordfield";
 
 // Import centralized Zod schema (from lib/validation.ts)
 import { loginSchema } from "@/lib/validation";
@@ -21,7 +20,6 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,43 +64,19 @@ export default function LoginForm() {
     <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <Card>
         <h2 className="text-2xl font-bold text-center text-[#1e2550] mb-6">Sign In</h2>
-        
-        <form onSubmit={handleSubmit} className="space-y-5">
-          
-          <div>
-            <Label>Email Address</Label>
-            <Input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="demo@gmail.com"
-              icon={<Mail className="h-5 w-5 text-[#1e2550]" />}
-              error={errors.email}
-            />
-          </div>
 
-          <div>
-            <Label>Password</Label>
-            <Input
-              type={showPassword ? "text" : "password"}
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              icon={<Lock className="h-5 w-5 text-[#1e2550]" />}
-              rightIcon={
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="cursor-pointer text-gray-400 hover:text-gray-600 focus:outline-none"
-                >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                </button>
-              }
-              error={errors.password}
-            />
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <EmailField
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={errors.email}
+          />
+
+          <PasswordField
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={errors.password}
+          />
 
           <div className="flex justify-end">
             <Link href={ROUTES.FORGET_PASSWORD} className="text-sm font-semibold text-[#1e2550] hover:underline">

@@ -8,6 +8,7 @@ export const authConfig = {
     signIn: "/login",
   },
   callbacks: {
+    
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
